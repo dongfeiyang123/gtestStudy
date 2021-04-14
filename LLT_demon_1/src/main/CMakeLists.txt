@@ -1,0 +1,31 @@
+SET(EXECUTABLE_NAME main)
+
+# 第三方库主目录
+SET(THIRDPARTY ${PROJECT_SOURCE_DIR}/third_party)
+
+#引头文件路径
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/common)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src)
+
+# 指定库路径
+LINK_DIRECTORIES(
+	${THIRDPARTY}/libs
+    ${PROJECT_SOURCE_DIR}/libs
+)
+
+# 找到当前所有源文件并赋值
+AUX_SOURCE_DIRECTORY(. ALL_CPP)
+
+# 生成可执行文件
+ADD_EXECUTABLE(${EXECUTABLE_NAME} ${ALL_CPP})
+
+# 链接指定库，目前只链接静态库
+TARGET_LINK_LIBRARIES(${EXECUTABLE_NAME}
+	libframe.a
+)
+
+# 另一种设置可执行程序输出目录
+#set_target_properties(${EXECUTABLE_NAME}
+#	PROPERTIES
+#	RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/target/bin"
+#)
